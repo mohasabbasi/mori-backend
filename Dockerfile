@@ -31,7 +31,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8000
 
 # Define environment variable
-ENV QDRANT_URL=http://qdrant.mori-ai.svc:6333
+ENV QDRANT_URL=https://qdrant.darkube.app/
 
 # Run app.py when the container launches
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
