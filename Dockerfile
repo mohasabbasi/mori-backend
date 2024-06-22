@@ -25,7 +25,7 @@ RUN pip install git+https://github.com/openai/CLIP.git
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Run the data extraction script
-RUN python3 data/etl.py
+#RUN python3 data/etl.py
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
