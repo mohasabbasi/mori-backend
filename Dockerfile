@@ -18,7 +18,7 @@ RUN  pip  install git+https://github.com/openai/CLIP.git
 # Install any needed packages specified in requirements.txt
 RUN pip  install --no-cache-dir -r requirements.txt
 
-RUN python3 data/etl.py
+RUN python  data/etl.py
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
 
