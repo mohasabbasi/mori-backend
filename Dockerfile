@@ -14,7 +14,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY . /app
+COPY . .
 
 # Install Python packages
 RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
