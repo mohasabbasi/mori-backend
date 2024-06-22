@@ -10,7 +10,7 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-RUN  apt-get install git-all 
+
 RUN  pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 RUN  pip3 install ftfy regex tqdm
 RUN  pip3 install git+https://github.com/openai/CLIP.git
