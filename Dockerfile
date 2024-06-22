@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 RUN apt-get update && \
     apt-get install --no-install-recommends -y gcc && \
     apt-get clean && rm -rf /var/lib/apt/lists/* \
-    apt install python3
+    apt-get install python3-pip
 
 # Set the working directory in the container
 WORKDIR /app
@@ -12,13 +12,13 @@ WORKDIR /app
 COPY . /app
 
 
-RUN  pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-RUN  pip install ftfy regex tqdm
-RUN  pip install git+https://github.com/openai/CLIP.git
+RUN  pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN  pip3 install ftfy regex tqdm
+RUN  pip3 install git+https://github.com/openai/CLIP.git
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-RUN python data/etl.py
+RUN python3 data/etl.py
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
 
