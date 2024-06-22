@@ -25,6 +25,10 @@ class Filters(BaseModel):
     category_name: str | None = None
     shop_name: str | None = None
 
+@app.get("/is-ready/")
+async def is_ready():
+    return {'result':'is-ready'}
+    
 @app.post("/search/")
 async def search(text: str , filters: Filters | None = None):
     text_encoded_vector = encoder.encode_text(text).cpu().numpy().tolist()[0]
