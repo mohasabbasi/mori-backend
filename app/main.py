@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from qdrant_client import models, QdrantClient
 from pydantic import BaseModel
 from typing import Union
-from server.data import encoder
+from data import encoder
 import os
 
 QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
