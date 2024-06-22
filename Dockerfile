@@ -2,7 +2,8 @@
 FROM ubuntu:22.04
 RUN apt-get update && \
     apt-get install --no-install-recommends -y gcc && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    apt-get clean && rm -rf /var/lib/apt/lists/* \
+    apt install python3
 
 # Set the working directory in the container
 WORKDIR /app
