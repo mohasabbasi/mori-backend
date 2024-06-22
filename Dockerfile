@@ -12,13 +12,13 @@ WORKDIR /app
 COPY . /app
 
 
-RUN  pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-RUN  pip3 install ftfy regex tqdm
-RUN  pip3 install git+https://github.com/openai/CLIP.git
+RUN  pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN  pip install ftfy regex tqdm
+RUN  pip install git+https://github.com/openai/CLIP.git
 # Install any needed packages specified in requirements.txt
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN python3 data/etl.py
+RUN python data/etl.py
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
 
