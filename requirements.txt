@@ -1,0 +1,7 @@
+requests
+fastapi
+uvicorn
+qdrant-client
+torch
+pandas
+Pillow
