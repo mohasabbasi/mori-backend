@@ -31,12 +31,12 @@ if not collection_exists(COLLECTION_NAME):
     )
 
 
-images_default_path = 'server/data/images'
+images_default_path = 'images'
 if not os.path.exists(images_default_path):
     os.mkdir(images_default_path)
 
 def fetch_products_data():
-    with open('server/data/data_lake/products.json','r') as f:
+    with open('data_lake/products.json','r') as f:
         data = json.loads(f.read())
 
     return data
@@ -67,7 +67,7 @@ print("Current Working Directory:", current_path)
 for product in products_list[0:10]:
     #Step first get and clean data
     # print(product )
-    save_dir = f"server/data/images/{product['id']}"
+    save_dir = f"images/{product['id']}"
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
 
