@@ -15,7 +15,8 @@ WORKDIR /app
 
 # Copy the current directory contents into the container at /app
 COPY . .
-
+RUN pwd
+RUN ls
 # Install Python packages
 RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 RUN pip install ftfy regex tqdm
