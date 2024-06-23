@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from typing import Union
 import requests
 import os
-from server.data import encoder  # Assuming this contains your encoder function
+from data import encoder  # Assuming this contains your encoder function
 
 QDRANT_URL = os.getenv("QDRANT_URL", "https://qdrant.darkube.app/")
 app = FastAPI()
