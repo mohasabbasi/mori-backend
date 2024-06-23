@@ -1,13 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from qdrant_client import models, QdrantClient
 from pydantic import BaseModel
 from typing import Union
-from data import encoder
+import requests
 import os
+from server.data import encoder  # Assuming this contains your encoder function
 
-QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
-client = QdrantClient(url=QDRANT_URL)
+QDRANT_URL = os.getenv("QDRANT_URL", "https://qdrant.darkube.app/")
 app = FastAPI()
 
 # CORS middleware configuration
@@ -25,28 +24,40 @@ class Filters(BaseModel):
     category_name: str | None = None
     shop_name: str | None = None
 
-@app.get("/is-ready/")
-async def is_ready():
-    return {'result':'is-ready'}
-    
 @app.post("/search/")
 async def search(text: str , filters: Filters | None = None):
     text_encoded_vector = encoder.encode_text(text).cpu().numpy().tolist()[0]
 
     field_conditions = []
     filters_dict = filters.dict() if filters is not None else {}
-    for key , value in filters_dict.items():
+    for key, value in filters_dict.items():
         if value:
-            condition = models.FieldCondition(
-                        key=key,
-                        match=models.MatchValue(value=value),
-                    )
+            condition = {
+                "key": key,
+                "match": {
+                    "value": value
+                }
+            }
             field_conditions.append(condition)
 
-    results = client.search(
-        collection_name="mori_collection",
-        query_vector = text_encoded_vector,
-        query_filter=models.Filter( must = field_conditions)
-    )
+    payload = {
+        "filter": {
+            "must": field_conditions
+        },
+        "vector": text_encoded_vector,
+        "with_payload": True,
+        "score_threshold":0.25,
+        "limit": 15
+    }
 
-    return {"results": results}
+    url = f"{QDRANT_URL}/collections/mori_collection/points/search"
+
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
+
+        results = response.json()
+        return {"results": results}
+
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(status_code=500, detail=f"Failed to perform search query: {str(e)}")
